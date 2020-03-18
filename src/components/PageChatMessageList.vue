@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import ChatMessageListItem from "./ChatMessageListItem";
+import ChatMessageListItem from "./PageChatMessageListItem";
 import { mapGetters } from "vuex";
 export default {
   name: "ChatMessages.vue",

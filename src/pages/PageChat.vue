@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import ChatMessageList from "../components/ChatMessageList";
+import ChatMessageList from "../components/PageChatMessageList";
 import { messagesRef } from "../firebaseConfig";
 import { mapGetters } from "vuex";
-import ChatMessageSubmit from "../components/ChatMessageSubmit";
+import ChatMessageSubmit from "../components/PageChatMessageSubmitForm";
 
 export default {
   name: "PageChat.vue",
