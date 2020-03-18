@@ -19,7 +19,7 @@ export default {
   data() {
     return {
       messageText: "",
-      nickname: "hootlex"
+      nickname: ""
     };
   },
   methods: {

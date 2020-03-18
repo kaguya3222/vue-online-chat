@@ -1,26 +1,26 @@
 <template>
   <div class="card">
     <div class="card-body">
-      <!-- nickname -->
       <h6 class="card-subtitle mb-2 text-muted">{{ message.nickname }}</h6>
-      <!-- content -->
       <p class="card-text">{{ message.text }}</p>
       <textarea
         v-model="editingMessage.text"
         class="form-control"
-        v-if="isMessageMatched(message)"
+        v-if="areMessagesMatch(message)"
       ></textarea>
-      <!-- actions -->
-      <template v-if="!isMessageMatched(message)">
+      <template v-if="!areMessagesMatch(message)">
         <a @click.prevent="deleteMessage(message)" href="#" class="card-link"
           >Delete</a
         >
-        <a @click.prevent="editMessage(message)" href="#" class="card-link"
+        <a
+          @click.prevent="beginEditingMessage(message)"
+          href="#"
+          class="card-link"
           >Edit</a
         >
       </template>
       <template v-else>
-        <a @click.prevent="changeMessage(message)" href="#" class="card-link"
+        <a @click.prevent="updateMessage(message)" href="#" class="card-link"
           >Update</a
         >
         <a @click.prevent="cancelEditing" href="#" class="card-link">Cancel</a>
@@ -31,6 +31,7 @@
 
 <script>
 import { messagesRef } from "../firebaseConfig";
+
 export default {
   name: "ChatMessage",
   props: {
@@ -45,13 +46,18 @@ export default {
     };
   },
   methods: {
+    areMessagesMatch(message) {
+      return this.editingMessage
+        ? message.id === this.editingMessage.id
+        : false;
+    },
     deleteMessage(message) {
       messagesRef.child(message.id).remove();
     },
-    editMessage(message) {
+    beginEditingMessage(message) {
       this.editingMessage = { ...message };
     },
-    changeMessage(message) {
+    updateMessage(message) {
       messagesRef
         .child(message.id)
         .update({
@@ -63,11 +69,6 @@ export default {
     },
     cancelEditing() {
       this.editingMessage = null;
-    },
-    isMessageMatched(message) {
-      return this.editingMessage
-        ? message.id === this.editingMessage.id
-        : false;
     }
   }
 };

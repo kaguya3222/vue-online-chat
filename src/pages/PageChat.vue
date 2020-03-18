@@ -9,15 +9,18 @@
 
 <script>
 import ChatMessageList from "../components/PageChatMessageList";
+import ChatMessageSubmit from "../components/PageChatMessageSubmitForm";
 import { messagesRef } from "../firebaseConfig";
 import { mapGetters } from "vuex";
-import ChatMessageSubmit from "../components/PageChatMessageSubmitForm";
 
 export default {
   name: "PageChat.vue",
   components: {
     ChatMessageSubmit,
     ChatMessageList
+  },
+  created() {
+    this.setFireBaseEvents();
   },
   data() {
     return {};
@@ -41,9 +44,6 @@ export default {
         });
       });
     }
-  },
-  created() {
-    this.setFireBaseEvents();
   }
 };
 </script>
