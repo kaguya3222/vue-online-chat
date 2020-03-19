@@ -5,8 +5,7 @@
       <textarea v-model="messageText" class="form-control"></textarea>
     </div>
     <div class="form-group">
-      <label>Nickname:</label>
-      <input v-model="nickname" class="form-control" />
+      <p>Nickname: {{ this.nickname }}</p>
     </div>
     <button class="btn btn-primary">Send</button>
   </form>
@@ -14,13 +13,17 @@
 
 <script>
 import { messagesRef } from "../firebaseConfig";
+import { mapGetters } from "vuex";
+
 export default {
   name: "ChatMessageSubmit",
   data() {
     return {
-      messageText: "",
-      nickname: ""
+      messageText: ""
     };
+  },
+  computed: {
+    ...mapGetters(["nickname"])
   },
   methods: {
     storeMessage() {
