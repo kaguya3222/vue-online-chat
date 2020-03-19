@@ -12,6 +12,7 @@ const config = {
 };
 firebase.initializeApp(config);
 const database = firebase.database();
+const firebaseAuthentication = firebase.auth();
 const messagesRef = database.ref("messages");
 
-export { messagesRef };
+export { messagesRef, firebaseAuthentication };

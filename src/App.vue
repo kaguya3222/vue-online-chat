@@ -4,6 +4,29 @@
   </div>
 </template>
 
-<script></script>
+<script>
+import { firebaseAuthentication } from "./firebaseConfig";
 
-<style lang="scss"></style>
+export default {
+  created() {
+    this.setFirebaseAuthEvents();
+  },
+  methods: {
+    setFirebaseAuthEvents() {
+      firebaseAuthentication.onAuthStateChanged(user => {
+        this.$store.dispatch("authorize", {
+          user
+        });
+      });
+    }
+  }
+};
+</script>
+
+<style lang="scss">
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+}
+</style>
