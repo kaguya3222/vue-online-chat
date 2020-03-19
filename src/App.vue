@@ -1,13 +1,18 @@
 <template>
   <div id="app">
+    <TheNavbar />
     <router-view />
   </div>
 </template>
 
 <script>
+import TheNavbar from "./components/TheNavbar";
 import { firebaseAuthentication } from "./firebaseConfig";
 
 export default {
+  components: {
+    TheNavbar
+  },
   created() {
     this.setFirebaseAuthEvents();
   },
