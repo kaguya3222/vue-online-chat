@@ -13,7 +13,7 @@ import ChatMessageListItem from "./PageChatMessageListItem";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "ChatMessages.vue",
+  name: "PageChatMessageList",
   computed: {
     ...mapGetters(["messages"])
   },

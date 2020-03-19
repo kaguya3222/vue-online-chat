@@ -33,7 +33,7 @@
 import { messagesRef } from "../firebaseConfig";
 
 export default {
-  name: "ChatMessage",
+  name: "PageChatMessageListItem",
   props: {
     message: {
       required: true,
