@@ -8,6 +8,11 @@ const routes = [
     path: "/",
     name: "Home",
     component: () => import("@/pages/PageChat.vue")
+  },
+  {
+    path: "/signUp",
+    name: "SignUp",
+    component: () => import("@/pages/PageRegistration.vue")
   }
 ];
 
