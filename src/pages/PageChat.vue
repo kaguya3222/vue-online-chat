@@ -1,6 +1,5 @@
 <template>
-  <div id="chat" class="container">
-    <h1>Vue School Chat Room</h1>
+  <div id="chat" class="mt-4 container">
     <ChatMessageList />
     <hr />
     <ChatMessageSubmit />
