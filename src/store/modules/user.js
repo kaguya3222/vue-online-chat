@@ -17,8 +17,8 @@ export default {
         user
       });
     },
-    updateUserProfile(store, { user }) {
-      store.state.authUser
+    async updateUserProfile(store, { user }) {
+      await store.state.authUser
         .updateProfile({
           ...user
         })

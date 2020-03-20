@@ -75,12 +75,12 @@ export default {
         this.form.email,
         this.form.password
       );
-      this.updateProfileWithRegistrationData({
+      await this.updateProfileWithRegistrationData({
         registrationData: { displayName: this.form.nickname }
       });
     },
-    updateProfileWithRegistrationData({ registrationData }) {
-      this.$store.dispatch("updateUserProfile", {
+    async updateProfileWithRegistrationData({ registrationData }) {
+      await this.$store.dispatch("updateUserProfile", {
         user: {
           ...this.authUser,
           ...registrationData
