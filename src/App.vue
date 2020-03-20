@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <TheNavbar />
-    <router-view />
+    <div class="wrapper">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -29,9 +31,17 @@ export default {
 </script>
 
 <style lang="scss">
+html,
+body {
+  height: 100%;
+}
 #app {
   min-height: 100vh;
+  height: 100%;
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: column;
+}
+.wrapper {
+  height: 100%;
 }
 </style>
