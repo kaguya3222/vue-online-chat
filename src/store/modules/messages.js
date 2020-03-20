@@ -1,4 +1,5 @@
 import Vue from "vue";
+import { findIndexById } from "../../helpers";
 
 export default {
   state: {
@@ -23,15 +24,17 @@ export default {
       store.commit("appendToMessages", { message });
     },
     removeMessage(store, { messageId }) {
-      const index = store.state.messages.findIndex(
-        message => message.id === messageId
-      );
+      const index = findIndexById({
+        array: store.state.messages,
+        id: messageId
+      });
       store.commit("removeFromMessages", { index });
     },
     updateMessage(store, { updatedMessage }) {
-      const index = store.state.messages.findIndex(
-        message => message.id === updatedMessage.id
-      );
+      const index = findIndexById({
+        array: store.state.messages,
+        id: updatedMessage
+      });
       store.commit("updateMessages", {
         payload: { message: updatedMessage, index }
       });
