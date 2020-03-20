@@ -47,9 +47,11 @@
 <script>
 import { firebaseAuthentication } from "../firebaseConfig";
 import { mapGetters } from "vuex";
+import page from "../mixins/page";
 
 export default {
   name: "PageRegistration.vue",
+  mixins: [page],
   data() {
     return {
       form: {
@@ -88,7 +90,6 @@ export default {
       });
     },
     moveToHomePage() {
-      this.isRegistering = false;
       this.$router.push({ name: "Home" });
     }
   }
