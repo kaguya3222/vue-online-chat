@@ -1,7 +1,6 @@
 <template>
   <div
-    class="d-flex flex-column justify-content-center align-self-center"
-    style="height: 100%; position: absolute;"
+    class="d-flex flex-column justify-content-center align-items-center h-100"
   >
     <b-form
       @submit.prevent="registerAndMoveToHomePage"
@@ -66,11 +65,11 @@ export default {
   },
   methods: {
     async registerAndMoveToHomePage() {
-      this.isRegistering = true;
       await this.register();
       this.moveToHomePage();
     },
     async register() {
+      this.isRegistering = true;
       await firebaseAuthentication.createUserWithEmailAndPassword(
         this.form.email,
         this.form.password
@@ -78,6 +77,7 @@ export default {
       await this.updateProfileWithRegistrationData({
         registrationData: { displayName: this.form.nickname }
       });
+      this.isRegistering = false;
     },
     async updateProfileWithRegistrationData({ registrationData }) {
       await this.$store.dispatch("updateUserProfile", {
