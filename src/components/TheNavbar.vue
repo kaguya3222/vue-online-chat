@@ -14,7 +14,22 @@
             >Sign Out</b-dropdown-item
           >
         </b-nav-item-dropdown>
-        <b-nav-item :to="{ name: 'SignUp' }" v-else>Sign in</b-nav-item>
+        <template v-else>
+          <b-button
+            squared
+            variant="dark"
+            text-variant="dark"
+            :to="{ name: 'SignIn' }"
+            >Sign in</b-button
+          >
+          <b-button
+            class="ml-2"
+            squared
+            variant="outline-light"
+            :to="{ name: 'SignUp' }"
+            >Sign up</b-button
+          >
+        </template>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
