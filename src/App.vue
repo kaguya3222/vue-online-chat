@@ -9,13 +9,14 @@
 
 <script>
 import TheNavbar from "./components/TheNavbar";
-import { firebaseAuthentication } from "./firebaseConfig";
+import { firebaseAuthentication, messagesRef } from "./firebaseConfig";
 
 export default {
   components: {
     TheNavbar
   },
   created() {
+    this.setFirebaseDatabaseEvents();
     this.setFirebaseAuthEvents();
   },
   methods: {
@@ -23,6 +24,24 @@ export default {
       firebaseAuthentication.onAuthStateChanged(user => {
         this.$store.dispatch("authorize", {
           user
+        });
+      });
+    },
+    setFirebaseDatabaseEvents() {
+      messagesRef.on("child_added", snapshot => {
+        this.$store.dispatch("appendMessage", {
+          message: {
+            ...snapshot.val(),
+            id: snapshot.key
+          }
+        });
+      });
+      messagesRef.on("child_removed", snapshot => {
+        this.$store.dispatch("removeMessage", { messageId: snapshot.key });
+      });
+      messagesRef.on("child_changed", snapshot => {
+        this.$store.dispatch("updateMessage", {
+          updatedMessage: { ...snapshot.val(), id: snapshot.key }
         });
       });
     }

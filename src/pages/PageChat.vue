@@ -17,32 +17,6 @@ export default {
   components: {
     ChatMessageSubmit,
     ChatMessageList
-  },
-  created() {
-    this.setFireBaseEvents();
-  },
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapGetters(["messages"])
-  },
-  methods: {
-    setFireBaseEvents() {
-      messagesRef.on("child_added", snapshot => {
-        this.$store.dispatch("appendMessage", {
-          message: { ...snapshot.val(), id: snapshot.key }
-        });
-      });
-      messagesRef.on("child_removed", snapshot => {
-        this.$store.dispatch("removeMessage", { messageId: snapshot.key });
-      });
-      messagesRef.on("child_changed", snapshot => {
-        this.$store.dispatch("updateMessage", {
-          updatedMessage: { ...snapshot.val(), id: snapshot.key }
-        });
-      });
-    }
   }
 };
 </script>
