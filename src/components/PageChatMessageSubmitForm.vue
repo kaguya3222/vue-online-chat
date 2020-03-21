@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="storeMessage">
+  <form @submit.prevent="storeMessage" v-if="authUser">
     <div class="form-group">
       <label>Message:</label>
       <textarea v-model="messageText" class="form-control"></textarea>
@@ -23,7 +23,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["nickname"])
+    ...mapGetters(["nickname", "authUser"])
   },
   methods: {
     storeMessage() {
