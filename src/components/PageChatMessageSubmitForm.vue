@@ -27,7 +27,12 @@ export default {
   },
   methods: {
     storeMessage() {
-      messagesRef.push({ text: this.messageText, nickname: this.nickname });
+      messagesRef.push({
+        text: this.messageText,
+        nickname: this.nickname,
+        uid: this.authUser.uid,
+        publishedAt: Math.round(Date.now() / 1000)
+      });
       this.messageText = "";
     }
   }
