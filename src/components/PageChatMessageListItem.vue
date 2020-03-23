@@ -2,11 +2,11 @@
   <div class="card">
     <div class="card-body">
       <h6 class="card-subtitle mb-2 text-muted">{{ message.nickname }}</h6>
-      <div class="d-flex flex-row">
+      <div v-if="!isMessageEditing(message)" class="d-flex flex-row">
         <div class="d-flex flex-column">
           <span class="card-text">{{ message.text }}</span>
           <div v-if="isAuthUserMessage">
-            <div class="mt-2" v-if="!areMessagesMatch(message)">
+            <div class="mt-2">
               <a
                 @click.prevent="deleteMessage(message)"
                 href="#"
@@ -20,28 +20,23 @@
                 >Edit</a
               >
             </div>
-            <template v-else>
-              <a
-                @click.prevent="updateMessage(message)"
-                href="#"
-                class="card-link"
-                >Update</a
-              >
-              <a @click.prevent="cancelEditing" href="#" class="card-link"
-                >Cancel</a
-              >
-            </template>
           </div>
         </div>
         <div class="ml-auto text-secondary mt-auto">
           <AppDate :unix-date="message.publishedAt" />
         </div>
       </div>
-      <textarea
-        v-model="editingMessage.text"
-        class="form-control"
-        v-if="areMessagesMatch(message)"
-      ></textarea>
+      <div v-else class="mt-2">
+        <textarea v-model="editingMessage.text" class="form-control"></textarea>
+        <div class="mt-1">
+          <a @click.prevent="updateMessage(message)" href="#" class="card-link"
+            >Update</a
+          >
+          <a @click.prevent="cancelEditing" href="#" class="card-link"
+            >Cancel</a
+          >
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -72,7 +67,7 @@ export default {
     }
   },
   methods: {
-    areMessagesMatch(message) {
+    isMessageEditing(message) {
       return this.editingMessage
         ? message.id === this.editingMessage.id
         : false;
