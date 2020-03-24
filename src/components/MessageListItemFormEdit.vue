@@ -15,7 +15,6 @@
 
 <script>
 import { messagesRef } from "../firebaseConfig";
-import { findIndexById } from "../helpers";
 import { mapGetters } from "vuex";
 
 export default {
@@ -27,28 +26,23 @@ export default {
     }
   },
   data() {
-    return {
-      editingMessage: { ...this.message }
-    };
+    return { editingMessage: { ...this.message } };
   },
   computed: {
-    ...mapGetters(["messages"])
+    ...mapGetters(["messages"]),
+    isMessageEdited() {
+      return this.editingMessage.text !== this.message.text;
+    }
   },
   methods: {
     updateMessage() {
-      const index = findIndexById({
-        array: this.messages,
-        id: this.editingMessage.id
-      });
       messagesRef
         .child(this.editingMessage.id)
         .update({
           text: this.editingMessage.text,
-          isEdited: this.messages[index].isEdited
+          isUpdated: this.isMessageEdited
         })
-        .then(() => {
-          this.cancelEditing();
-        });
+        .then(() => this.cancelEditing());
     },
     cancelEditing() {
       this.$emit("onCancelEditing");
