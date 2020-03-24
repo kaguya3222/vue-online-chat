@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-body">
       <h6 class="card-subtitle mb-2 text-muted">{{ message.nickname }}</h6>
-      <div v-if="!isMessageEditing" class="d-flex flex-row">
+      <div v-if="!isEditing" class="d-flex flex-row">
         <div class="d-flex flex-column">
           <span class="card-text">{{ message.text }}</span>
           <div v-if="isAuthUserMessage">
@@ -24,7 +24,7 @@
         </div>
         <div class="ml-auto text-secondary mt-auto">
           <AppDate :unix-date="message.publishedAt" />
-          <span v-if="isEdited"><small>(edited)</small></span>
+          <span v-if="isMessageUpdated"><small>(updated)</small></span>
         </div>
       </div>
       <MessageListItemFormEdit
@@ -37,10 +37,10 @@
 </template>
 
 <script>
-import { messagesRef } from "../firebaseConfig";
-import { mapGetters } from "vuex";
 import AppDate from "./AppDate";
 import MessageListItemFormEdit from "./MessageListItemFormEdit";
+import { messagesRef } from "../firebaseConfig";
+import { mapGetters } from "vuex";
 
 export default {
   name: "PageChatMessageListItem",
@@ -52,20 +52,15 @@ export default {
     }
   },
   data() {
-    return {
-      isEditing: false
-    };
+    return { isEditing: false };
   },
   computed: {
     ...mapGetters(["authUser"]),
     isAuthUserMessage() {
       return this.authUser ? this.message.uid === this.authUser.uid : null;
     },
-    isMessageEditing() {
-      return this.isEditing;
-    },
-    isEdited() {
-      return this.message.isEdited;
+    isMessageUpdated() {
+      return this.message.isUpdated;
     }
   },
   methods: {
