@@ -19,7 +19,7 @@
 
 <script>
 import ChatMessageList from "../components/PageChatMessageList";
-import ChatMessageSubmit from "../components/PageChatMessageSubmitForm";
+import ChatMessageSubmit from "../components/PageChatMessageFormSubmit";
 import { mapGetters } from "vuex";
 
 export default {

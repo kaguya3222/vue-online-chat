@@ -40,9 +40,11 @@ export default {
         array: store.state.messages,
         id: updatedMessage.id
       });
-      store.commit("updateMessages", {
-        payload: { message: updatedMessage, index }
-      });
+      if (updatedMessage.text !== store.state.messages[index].text) {
+        store.commit("updateMessages", {
+          payload: { message: { ...updatedMessage, isEdited: true }, index }
+        });
+      }
     },
     messagesAreLoaded(store) {
       store.commit("updateAreMessagesLoaded", { flag: true });

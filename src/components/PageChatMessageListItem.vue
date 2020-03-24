@@ -24,19 +24,14 @@
         </div>
         <div class="ml-auto text-secondary mt-auto">
           <AppDate :unix-date="message.publishedAt" />
+          <span v-if="isEdited"><small>(edited)</small></span>
         </div>
       </div>
-      <div v-else class="mt-2">
-        <textarea v-model="editingMessage.text" class="form-control"></textarea>
-        <div class="mt-1">
-          <a @click.prevent="updateMessage(message)" href="#" class="card-link"
-            >Update</a
-          >
-          <a @click.prevent="cancelEditing" href="#" class="card-link"
-            >Cancel</a
-          >
-        </div>
-      </div>
+      <MessageListItemFormEdit
+        v-else
+        :message="message"
+        @onCancelEditing="stopEditingMessage"
+      />
     </div>
   </div>
 </template>

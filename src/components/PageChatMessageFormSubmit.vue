@@ -31,7 +31,8 @@ export default {
         text: this.messageText,
         nickname: this.nickname,
         uid: this.authUser.uid,
-        publishedAt: Math.round(Date.now() / 1000)
+        publishedAt: Math.round(Date.now() / 1000),
+        isEdited: false
       });
       this.messageText = "";
     }
