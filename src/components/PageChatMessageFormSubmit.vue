@@ -18,9 +18,7 @@ import { mapGetters } from "vuex";
 export default {
   name: "PageChatMessageSubmitForm",
   data() {
-    return {
-      messageText: ""
-    };
+    return { messageText: "" };
   },
   computed: {
     ...mapGetters(["nickname", "authUser"])
@@ -32,7 +30,7 @@ export default {
         nickname: this.nickname,
         uid: this.authUser.uid,
         publishedAt: Math.round(Date.now() / 1000),
-        isEdited: false
+        isUpdated: false
       });
       this.messageText = "";
     }
