@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { findIndexById } from "../../helpers";
+import { getMessageIndexById } from "../helpers";
 
 export default {
   state: {
@@ -29,22 +29,14 @@ export default {
       store.commit("appendToMessages", { message });
     },
     removeMessage(store, { messageId }) {
-      const index = findIndexById({
-        array: store.state.messages,
-        id: messageId
-      });
+      const index = getMessageIndexById({ messageId });
       store.commit("removeFromMessages", { index });
     },
     updateMessage(store, { updatedMessage }) {
-      const index = findIndexById({
-        array: store.state.messages,
-        id: updatedMessage.id
+      const index = getMessageIndexById({ messageId: updatedMessage.id });
+      store.commit("updateMessages", {
+        payload: { message: { ...updatedMessage }, index }
       });
-      if (updatedMessage.text !== store.state.messages[index].text) {
-        store.commit("updateMessages", {
-          payload: { message: { ...updatedMessage, isEdited: true }, index }
-        });
-      }
     },
     messagesAreLoaded(store) {
       store.commit("updateAreMessagesLoaded", { flag: true });
