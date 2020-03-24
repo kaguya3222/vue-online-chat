@@ -14,12 +14,8 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "PageChatMessageList",
-  components: {
-    ChatMessageListItem
-  },
-  computed: {
-    ...mapGetters(["messages"])
-  }
+  components: { ChatMessageListItem },
+  computed: { ...mapGetters(["messages"]) }
 };
 </script>
 

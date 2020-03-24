@@ -41,9 +41,7 @@ import { firebaseAuthentication } from "../firebaseConfig";
 
 export default {
   name: "TheNavbar",
-  computed: {
-    ...mapGetters(["nickname"])
-  },
+  computed: { ...mapGetters(["nickname"]) },
   methods: {
     signOut() {
       firebaseAuthentication.signOut();
