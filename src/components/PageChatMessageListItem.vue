@@ -43,7 +43,6 @@ import { messagesRef } from "../firebaseConfig";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "PageChatMessageListItem",
   components: { AppDate, MessageListItemFormEdit },
   props: {
     message: {

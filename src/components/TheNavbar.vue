@@ -40,7 +40,6 @@ import { mapGetters } from "vuex";
 import { firebaseAuthentication } from "../firebaseConfig";
 
 export default {
-  name: "TheNavbar",
   computed: { ...mapGetters(["nickname"]) },
   methods: {
     signOut() {

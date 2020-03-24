@@ -23,7 +23,6 @@ import ChatMessageSubmit from "../components/PageChatMessageFormSubmit";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "PageChat.vue",
   components: {
     ChatMessageSubmit,
     ChatMessageList

@@ -41,7 +41,6 @@ import { firebaseAuthentication } from "../firebaseConfig";
 import page from "../mixins/page";
 
 export default {
-  name: "PageAuthorization",
   mixins: [page],
   data() {
     return {

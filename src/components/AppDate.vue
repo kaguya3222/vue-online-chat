@@ -7,7 +7,6 @@
 <script>
 import moment from "moment";
 export default {
-  name: "AppDate.vue",
   props: {
     unixDate: {
       required: true,

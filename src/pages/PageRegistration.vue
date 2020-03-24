@@ -50,7 +50,6 @@ import { mapGetters } from "vuex";
 import page from "../mixins/page";
 
 export default {
-  name: "PageRegistration.vue",
   mixins: [page],
   data() {
     return {

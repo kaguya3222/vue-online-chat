@@ -18,7 +18,6 @@ import { messagesRef } from "../firebaseConfig";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "PageChatMessageListItemEditMessageForm.vue",
   props: {
     message: {
       required: true,

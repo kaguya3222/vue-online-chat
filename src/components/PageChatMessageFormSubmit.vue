@@ -16,7 +16,6 @@ import { messagesRef } from "../firebaseConfig";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "PageChatMessageSubmitForm",
   data() {
     return { messageText: "" };
   },
