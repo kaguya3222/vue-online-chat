@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-body">
       <h6 class="card-subtitle mb-2 text-muted">{{ message.nickname }}</h6>
-      <div v-if="!isMessageEditing(message)" class="d-flex flex-row">
+      <div v-if="!isMessageEditing" class="d-flex flex-row">
         <div class="d-flex flex-column">
           <span class="card-text">{{ message.text }}</span>
           <div v-if="isAuthUserMessage">
@@ -45,10 +45,11 @@
 import { messagesRef } from "../firebaseConfig";
 import { mapGetters } from "vuex";
 import AppDate from "./AppDate";
+import MessageListItemFormEdit from "./MessageListItemFormEdit";
 
 export default {
   name: "PageChatMessageListItem",
-  components: { AppDate },
+  components: { AppDate, MessageListItemFormEdit },
   props: {
     message: {
       required: true,
@@ -57,39 +58,30 @@ export default {
   },
   data() {
     return {
-      editingMessage: null
+      isEditing: false
     };
   },
   computed: {
     ...mapGetters(["authUser"]),
     isAuthUserMessage() {
       return this.authUser ? this.message.uid === this.authUser.uid : null;
+    },
+    isMessageEditing() {
+      return this.isEditing;
+    },
+    isEdited() {
+      return this.message.isEdited;
     }
   },
   methods: {
-    isMessageEditing(message) {
-      return this.editingMessage
-        ? message.id === this.editingMessage.id
-        : false;
-    },
     deleteMessage(message) {
       messagesRef.child(message.id).remove();
     },
-    beginEditingMessage(message) {
-      this.editingMessage = { ...message };
+    beginEditingMessage() {
+      this.isEditing = true;
     },
-    updateMessage(message) {
-      messagesRef
-        .child(message.id)
-        .update({
-          text: this.editingMessage.text
-        })
-        .then(() => {
-          this.cancelEditing();
-        });
-    },
-    cancelEditing() {
-      this.editingMessage = null;
+    stopEditingMessage() {
+      this.isEditing = false;
     }
   }
 };
