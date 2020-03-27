@@ -6,36 +6,17 @@
       @submit.prevent="registerAndMoveToHomePage"
       class="d-flex flex-column"
     >
-      <b-form-group label="Email: " label-for="email">
-        <b-form-input
-          id="email"
-          type="email"
-          placeholder="Email"
-          v-model="form.email"
-        ></b-form-input>
-      </b-form-group>
-      <b-form-group label="Password: " label-for="password">
-        <b-form-input
-          id="password"
-          type="password"
-          placeholder="Password"
-          v-model="form.password"
-          autocomplete="cc-password"
-        ></b-form-input>
-      </b-form-group>
-      <b-form-group label="Nickname: " label-for="name">
-        <b-form-input
-          id="name"
-          type="text"
-          placeholder="Nickname"
-          v-model="form.nickname"
-        ></b-form-input>
-      </b-form-group>
+      <PageRegistrationInput
+        v-for="(inputMetadata, index) in formInputMetadata"
+        :key="index"
+        :inputMetadata="inputMetadata"
+        :validation="$v.formInputValues[inputMetadata.validationName]"
+      />
       <b-button
         type="submit"
         class="align-self-center"
         variant="primary"
-        :disabled="isRegistering"
+        :disabled="isDisabled"
       >
         <b-spinner small v-if="isRegistering"></b-spinner>
         <template v-else>Sign up</template>
@@ -45,24 +26,104 @@
 </template>
 
 <script>
-import { firebaseAuthentication } from "../firebaseConfig";
+import PageRegistrationInput from "../components/PageRegistrationInput";
+import { firebaseAuthentication, usersRef } from "../firebaseConfig";
 import { mapGetters } from "vuex";
+import { validationMixin } from "vuelidate";
+import { required, minLength, email, sameAs } from "vuelidate/lib/validators";
 import page from "../mixins/page";
 
 export default {
-  mixins: [page],
+  components: {
+    PageRegistrationInput
+  },
+  mixins: [page, validationMixin],
   data() {
     return {
-      form: {
+      formInputMetadata: [
+        {
+          label: "Email",
+          id: "email",
+          type: "email",
+          placeholder: "Email",
+          validationName: "email",
+          validationErrors: {
+            required: "Required",
+            isUnique: "Email is already taken",
+            email: "Email is not valid"
+          }
+        },
+        {
+          label: "Password",
+          id: "password",
+          type: "password",
+          placeholder: "Password",
+          validationName: "password",
+          validationErrors: {
+            required: "Required",
+            minLength: "Password length should be at least 6 characters"
+          }
+        },
+        {
+          label: "Confirm Password",
+          id: "confirmPassword",
+          type: "password",
+          placeholder: "Confirm Password",
+          validationName: "confirmPassword",
+          validationErrors: {
+            required: "Required",
+            sameAs: "Password mismatch"
+          }
+        },
+        {
+          label: "Nickname",
+          id: "nickname",
+          type: "text",
+          placeholder: "Nickname",
+          validationName: "nickname",
+          validationErrors: {
+            required: "Required",
+            minLength: "Nickname length should be at least 3 characters"
+          }
+        }
+      ],
+      formInputValues: {
         email: null,
         password: null,
+        confirmPassword: null,
         nickname: null
       },
       isRegistering: false
     };
   },
+  validations: {
+    formInputValues: {
+      email: {
+        required,
+        email,
+        isUnique(value) {
+          return !this.user({ email: value });
+        }
+      },
+      password: {
+        required,
+        minLength: minLength(6)
+      },
+      confirmPassword: {
+        required,
+        sameAs: sameAs("password")
+      },
+      nickname: {
+        required,
+        minLength: minLength(3)
+      }
+    }
+  },
   computed: {
-    ...mapGetters(["authUser"])
+    ...mapGetters(["authUser", "user"]),
+    isDisabled() {
+      return this.$v.formInputValues.$invalid || this.isRegistering;
+    }
   },
   methods: {
     async registerAndMoveToHomePage() {
@@ -72,12 +133,13 @@ export default {
     async register() {
       this.isRegistering = true;
       await firebaseAuthentication.createUserWithEmailAndPassword(
-        this.form.email,
-        this.form.password
+        this.formInputValues.email,
+        this.formInputValues.password
       );
       await this.updateProfileWithRegistrationData({
-        registrationData: { displayName: this.form.nickname }
+        registrationData: { displayName: this.formInputValues.nickname }
       });
+      await this.addUserToDatabase();
       this.isRegistering = false;
     },
     async addUserToDatabase() {
@@ -94,9 +156,6 @@ export default {
           ...registrationData
         }
       });
-    },
-    moveToHomePage() {
-      this.$router.push({ name: "Home" });
     }
   }
 };
