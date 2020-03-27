@@ -14,5 +14,6 @@ firebase.initializeApp(config);
 const database = firebase.database();
 const firebaseAuthentication = firebase.auth();
 const messagesRef = database.ref("messages");
+const usersRef = database.ref("users");
 
-export { messagesRef, firebaseAuthentication };
+export { messagesRef, usersRef, firebaseAuthentication };

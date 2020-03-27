@@ -1,14 +1,20 @@
 export default {
   state: {
+    users: [],
     authUser: null
   },
   getters: {
+    user: state => ({ email }) =>
+      state.users ? state.users.find(user => user.email === email) : null,
     authUser: state => state.authUser,
     nickname: state => (state.authUser ? state.authUser.displayName : null)
   },
   mutations: {
     setAuthUser(state, { user }) {
       state.authUser = user;
+    },
+    setUsers(state, { users }) {
+      state.users = users;
     }
   },
   actions: {
@@ -27,6 +33,9 @@ export default {
             user
           });
         });
+    },
+    onceUsersAreLoaded(store, { users }) {
+      store.commit("setUsers", { users });
     }
   }
 };

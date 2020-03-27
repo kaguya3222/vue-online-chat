@@ -80,6 +80,13 @@ export default {
       });
       this.isRegistering = false;
     },
+    async addUserToDatabase() {
+      await usersRef.child(`${this.authUser.uid}`).set({
+        email: this.authUser.email,
+        nickname: this.authUser.displayName,
+        uid: this.authUser.uid
+      });
+    },
     async updateProfileWithRegistrationData({ registrationData }) {
       await this.$store.dispatch("updateUserProfile", {
         user: {

@@ -9,17 +9,28 @@
 
 <script>
 import TheNavbar from "./components/TheNavbar";
-import { firebaseAuthentication, messagesRef } from "./firebaseConfig";
+import {
+  firebaseAuthentication,
+  messagesRef,
+  usersRef
+} from "./firebaseConfig";
 
 export default {
   components: {
     TheNavbar
   },
   created() {
-    this.setFirebaseDatabaseEvents();
+    this.loadUsers();
     this.setFirebaseAuthEvents();
+    this.setFirebaseDatabaseEvents();
   },
   methods: {
+    loadUsers() {
+      usersRef.once("value", snapshot => {
+        const users = snapshot.val() ? Object.values(snapshot.val()) : [];
+        this.$store.dispatch("onceUsersAreLoaded", { users });
+      });
+    },
     setFirebaseAuthEvents() {
       firebaseAuthentication.onAuthStateChanged(user => {
         this.$store.dispatch("authorize", {
