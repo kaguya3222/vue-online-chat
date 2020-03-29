@@ -7,7 +7,7 @@
       <PageRegistrationInput
         v-for="(input, index) in Object.values(form)"
         :key="index"
-        :inputMetadata="input.metadata"
+        :input-metadata="input.metadata"
         :validation="$v.form[input.metadata.validationName].value"
       />
       <b-button

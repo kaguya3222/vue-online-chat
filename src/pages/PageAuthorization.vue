@@ -5,19 +5,19 @@
     <b-form @submit.prevent="authorize" class="d-flex flex-column">
       <b-form-group label="Email: " label-for="email">
         <b-form-input
+          v-model="$v.form.email.$model"
           id="email"
           type="email"
           placeholder="Email"
           :state="isFormValid"
-          v-model="$v.form.email.$model"
         />
       </b-form-group>
       <b-form-group label="Password: " label-for="password">
         <b-form-input
+          v-model="$v.form.password.$model"
           id="password"
           type="password"
           placeholder="Password"
-          v-model="$v.form.password.$model"
           :state="isFormValid"
           autocomplete="cc-password"
         ></b-form-input>

@@ -8,15 +8,15 @@
           <div v-if="isAuthUserMessage">
             <div class="mt-2">
               <a
-                @click.prevent="deleteMessage(message)"
                 href="#"
                 class="card-link"
+                @click.prevent="deleteMessage(message)"
                 >Delete</a
               >
               <a
-                @click.prevent="beginEditingMessage(message)"
                 href="#"
                 class="card-link"
+                @click.prevent="beginEditingMessage(message)"
                 >Edit</a
               >
             </div>
@@ -38,7 +38,7 @@
 
 <script>
 import AppDate from "./AppDate";
-import MessageListItemFormEdit from "./MessageListItemFormEdit";
+import MessageListItemFormEdit from "./PageChatMessageListItemFormEdit";
 import { messagesRef } from "../firebaseConfig";
 import { mapGetters } from "vuex";
 

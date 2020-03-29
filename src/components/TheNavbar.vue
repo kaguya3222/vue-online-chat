@@ -6,7 +6,7 @@
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav class="ml-auto">
-        <b-nav-item-dropdown right v-if="nickname">
+        <b-nav-item-dropdown v-if="nickname" right>
           <template v-slot:button-content>
             <em>{{ nickname }}</em>
           </template>

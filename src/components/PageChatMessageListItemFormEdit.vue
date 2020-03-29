@@ -3,12 +3,12 @@
     <textarea v-model="editingMessage.text" class="form-control"></textarea>
     <div class="mt-1">
       <a
-        @click.prevent="updateMessage(editingMessage)"
         href="#"
         class="card-link"
+        @click.prevent="updateMessage(editingMessage)"
         >Update</a
       >
-      <a @click.prevent="cancelEditing" href="#" class="card-link">Cancel</a>
+      <a href="#" class="card-link" @click.prevent="cancelEditing">Cancel</a>
     </div>
   </div>
 </template>

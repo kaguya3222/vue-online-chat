@@ -1,11 +1,11 @@
 <template>
   <b-form-group :label="inputMetadata.label" :label-for="inputMetadata.id">
     <b-form-input
+      v-model="validation.$model"
       :id="inputMetadata.id"
       :type="inputMetadata.type"
       :placeholder="inputMetadata.placeholder"
       :state="isInputValid"
-      v-model="validation.$model"
     ></b-form-input>
     <b-form-invalid-feedback :state="isInputValid">
       {{ validationErrorTitle }}
