@@ -41,14 +41,7 @@ export default {
       });
     },
     setMessagesRefEvents() {
-      messagesRef.on("child_added", snapshot => {
-        this.$store.dispatch("appendMessage", {
-          message: {
-            ...snapshot.val(),
-            id: snapshot.key
-          }
-        });
-      });
+      this.setEventsOnceMessagesAreLoaded();
       messagesRef.on("child_removed", snapshot => {
         this.$store.dispatch("removeMessage", { messageId: snapshot.key });
       });
@@ -56,6 +49,19 @@ export default {
         this.$store.dispatch("updateMessage", {
           updatedMessage: { ...snapshot.val(), id: snapshot.key }
         });
+      });
+    },
+    setEventsOnceMessagesAreLoaded() {
+      messagesRef.once("value", () => {
+        messagesRef.on("child_added", snapshot => {
+          this.$store.dispatch("appendMessage", {
+            message: {
+              ...snapshot.val(),
+              id: snapshot.key
+            }
+          });
+        });
+        this.$store.dispatch("messagesAreLoaded");
       });
     }
   }

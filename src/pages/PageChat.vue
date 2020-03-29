@@ -1,7 +1,7 @@
 <template>
   <div id="chat" class="d-flex flex-column  mt-4 container">
     <b-spinner
-      v-if="messages.length === 0"
+      v-if="!areMessagesLoaded"
       variant="primary"
       label="Spinning"
       class="align-self-center"
@@ -28,7 +28,7 @@ export default {
     ChatMessageList
   },
   computed: {
-    ...mapGetters(["authUser", "areMessagesLoaded", "messages"])
+    ...mapGetters(["authUser", "areMessagesLoaded"])
   }
 };
 </script>
