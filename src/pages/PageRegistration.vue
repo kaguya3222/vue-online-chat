@@ -25,7 +25,7 @@
 
 <script>
 import PageRegistrationInput from "../components/PageRegistrationInput";
-import { firebaseAuthentication, usersRef } from "../firebaseConfig";
+import { firebaseAuthentication, usersRef } from "../firebaseTools";
 import { mapGetters } from "vuex";
 import { validationMixin } from "vuelidate";
 import { required, minLength, email, sameAs } from "vuelidate/lib/validators";

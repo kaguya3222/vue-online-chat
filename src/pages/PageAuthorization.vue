@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { firebaseAuthentication } from "../firebaseConfig";
+import { firebaseAuthentication } from "../firebaseTools";
 import page from "../mixins/page";
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";

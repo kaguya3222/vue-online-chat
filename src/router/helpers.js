@@ -1,4 +1,4 @@
-import { firebaseAuthentication } from "../firebaseConfig";
+import { firebaseAuthentication } from "../firebaseTools";
 
 const redirectOrPass = async (to, next) => {
   const shouldUserBeRedirected = await checkIfAuthorizedUserShouldBeRedirected({

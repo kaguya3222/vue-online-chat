@@ -9,11 +9,7 @@
 
 <script>
 import TheNavbar from "./components/TheNavbar";
-import {
-  firebaseAuthentication,
-  messagesRef,
-  usersRef
-} from "./firebaseConfig";
+import { firebaseAuthentication, messagesRef, usersRef } from "./firebaseTools";
 
 export default {
   components: {

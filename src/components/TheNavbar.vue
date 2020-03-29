@@ -37,7 +37,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { firebaseAuthentication } from "../firebaseConfig";
+import { firebaseAuthentication } from "../firebaseTools";
 
 export default {
   computed: { ...mapGetters(["nickname"]) },

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { messagesRef } from "../firebaseConfig";
+import { messagesRef } from "../firebaseTools";
 import { mapGetters } from "vuex";
 
 export default {

@@ -39,7 +39,7 @@
 <script>
 import AppDate from "./AppDate";
 import MessageListItemFormEdit from "./PageChatMessageListItemFormEdit";
-import { messagesRef } from "../firebaseConfig";
+import { messagesRef } from "../firebaseTools";
 import { mapGetters } from "vuex";
 
 export default {
