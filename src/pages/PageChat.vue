@@ -3,7 +3,7 @@
     <b-spinner
       variant="primary"
       label="Spinning"
-      v-if="!areMessagesLoaded"
+      v-if="messages.length === 0"
       class="align-self-center"
     ></b-spinner>
     <div v-else>
@@ -28,7 +28,7 @@ export default {
     ChatMessageList
   },
   computed: {
-    ...mapGetters(["authUser", "areMessagesLoaded"])
+    ...mapGetters(["authUser", "areMessagesLoaded", "messages"])
   }
 };
 </script>

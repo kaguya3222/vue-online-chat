@@ -3,12 +3,10 @@ import { getMessageIndexById } from "../helpers";
 
 export default {
   state: {
-    messages: [],
-    areMessagesLoaded: false
+    messages: []
   },
   getters: {
-    messages: state => state.messages,
-    areMessagesLoaded: state => state.areMessagesLoaded
+    messages: state => state.messages
   },
   mutations: {
     appendToMessages(state, { message }) {
@@ -19,9 +17,6 @@ export default {
     },
     updateMessages(state, { payload }) {
       Vue.set(state.messages, payload.index, payload.message);
-    },
-    updateAreMessagesLoaded(state, { flag }) {
-      state.areMessagesLoaded = flag;
     }
   },
   actions: {
@@ -37,9 +32,6 @@ export default {
       store.commit("updateMessages", {
         payload: { message: { ...updatedMessage }, index }
       });
-    },
-    messagesAreLoaded(store) {
-      store.commit("updateAreMessagesLoaded", { flag: true });
     }
   }
 };
