@@ -1,16 +1,14 @@
 <template>
   <div
+    v-if="!authUser"
     class="d-flex flex-column justify-content-center align-items-center h-100"
   >
-    <b-form
-      @submit.prevent="registerAndMoveToHomePage"
-      class="d-flex flex-column"
-    >
+    <b-form @submit.prevent="formIsSubmitted" class="d-flex flex-column">
       <PageRegistrationInput
-        v-for="(inputMetadata, index) in formInputMetadata"
+        v-for="(input, index) in Object.values(form)"
         :key="index"
-        :inputMetadata="inputMetadata"
-        :validation="$v.formInputValues[inputMetadata.validationName]"
+        :inputMetadata="input.metadata"
+        :validation="$v.form[input.metadata.validationName].value"
       />
       <b-button
         type="submit"
@@ -40,110 +38,126 @@ export default {
   mixins: [page, validationMixin],
   data() {
     return {
-      formInputMetadata: [
-        {
-          label: "Email",
-          id: "email",
-          type: "email",
-          placeholder: "Email",
-          validationName: "email",
-          validationErrors: {
-            required: "Required",
-            isUnique: "Email is already taken",
-            email: "Email is not valid"
-          }
+      form: {
+        email: {
+          metadata: {
+            label: "Email",
+            id: "email",
+            type: "email",
+            placeholder: "Email",
+            validationName: "email",
+            validationErrors: {
+              required: "Required",
+              isUnique: "Email is already taken",
+              email: "Email is not valid"
+            }
+          },
+          value: null
         },
-        {
-          label: "Password",
-          id: "password",
-          type: "password",
-          placeholder: "Password",
-          validationName: "password",
-          validationErrors: {
-            required: "Required",
-            minLength: "Password length should be at least 6 characters"
-          }
+        password: {
+          metadata: {
+            label: "Password",
+            id: "password",
+            type: "password",
+            placeholder: "Password",
+            validationName: "password",
+            validationErrors: {
+              required: "Required",
+              minLength: "Password length should be at least 6 characters"
+            }
+          },
+          value: null
         },
-        {
-          label: "Confirm Password",
-          id: "confirmPassword",
-          type: "password",
-          placeholder: "Confirm Password",
-          validationName: "confirmPassword",
-          validationErrors: {
-            required: "Required",
-            sameAs: "Password mismatch"
-          }
+        confirmPassword: {
+          metadata: {
+            label: "Confirm Password",
+            id: "confirmPassword",
+            type: "password",
+            placeholder: "Confirm Password",
+            validationName: "confirmPassword",
+            validationErrors: {
+              required: "Required",
+              sameAs: "Password mismatch"
+            }
+          },
+          value: null
         },
-        {
-          label: "Nickname",
-          id: "nickname",
-          type: "text",
-          placeholder: "Nickname",
-          validationName: "nickname",
-          validationErrors: {
-            required: "Required",
-            minLength: "Nickname length should be at least 3 characters"
-          }
+        nickname: {
+          metadata: {
+            label: "Nickname",
+            id: "nickname",
+            type: "text",
+            placeholder: "Nickname",
+            validationName: "nickname",
+            validationErrors: {
+              required: "Required",
+              minLength: "Nickname length should be at least 3 characters"
+            }
+          },
+          value: null
         }
-      ],
-      formInputValues: {
-        email: null,
-        password: null,
-        confirmPassword: null,
-        nickname: null
       },
       isRegistering: false
     };
   },
   validations: {
-    formInputValues: {
+    form: {
       email: {
-        required,
-        email,
-        isUnique(value) {
-          return !this.user({ email: value });
+        value: {
+          required,
+          email,
+          isUnique(value) {
+            return !this.user({ email: value });
+          }
         }
       },
       password: {
-        required,
-        minLength: minLength(6)
+        value: {
+          required,
+          minLength: minLength(6)
+        }
       },
       confirmPassword: {
-        required,
-        sameAs: sameAs("password")
+        value: {
+          required,
+          sameAs: sameAs(function() {
+            return this.form.password.value;
+          })
+        }
       },
       nickname: {
-        required,
-        minLength: minLength(3)
+        value: {
+          required,
+          minLength: minLength(3)
+        }
       }
     }
   },
   computed: {
     ...mapGetters(["authUser", "user"]),
     isDisabled() {
-      return this.$v.formInputValues.$invalid || this.isRegistering;
+      return this.$v.form.$invalid || this.isRegistering;
     }
   },
   methods: {
-    async registerAndMoveToHomePage() {
+    async formIsSubmitted() {
       await this.register();
+      this.addUserToDatabase();
       this.moveToHomePage();
     },
     async register() {
       this.isRegistering = true;
       await firebaseAuthentication.createUserWithEmailAndPassword(
-        this.formInputValues.email,
-        this.formInputValues.password
+        this.form.email.value,
+        this.form.password.value
       );
       await this.updateProfileWithRegistrationData({
-        registrationData: { displayName: this.formInputValues.nickname }
+        registrationData: { displayName: this.form.nickname.value }
       });
-      await this.addUserToDatabase();
       this.isRegistering = false;
     },
-    async addUserToDatabase() {
-      await usersRef.child(`${this.authUser.uid}`).set({
+    addUserToDatabase() {
+      usersRef.child(`${this.authUser.uid}`).set({
         email: this.authUser.email,
         nickname: this.authUser.displayName,
         uid: this.authUser.uid
