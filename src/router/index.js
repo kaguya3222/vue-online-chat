@@ -5,6 +5,11 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: "*",
+    name: "NotFound",
+    component: () => import("@/pages/PageNotFound.vue")
+  },
+  {
     path: "/",
     name: "Home",
     component: () => import("@/pages/PageChat.vue")
