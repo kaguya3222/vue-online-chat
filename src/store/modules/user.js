@@ -13,8 +13,8 @@ export default {
     setAuthUser(state, { user }) {
       state.authUser = user;
     },
-    setUsers(state, { users }) {
-      state.users = users;
+    appendToUsers(state, { user }) {
+      state.users.push(user);
     }
   },
   actions: {
@@ -34,8 +34,8 @@ export default {
           });
         });
     },
-    onceUsersAreLoaded(store, { users }) {
-      store.commit("setUsers", { users });
+    appendUser(store, { user }) {
+      store.commit("appendToUsers", { user });
     }
   }
 };

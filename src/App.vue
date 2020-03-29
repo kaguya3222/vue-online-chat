@@ -20,17 +20,10 @@ export default {
     TheNavbar
   },
   created() {
-    this.loadUsers();
     this.setFirebaseAuthEvents();
     this.setFirebaseDatabaseEvents();
   },
   methods: {
-    loadUsers() {
-      usersRef.once("value", snapshot => {
-        const users = snapshot.val() ? Object.values(snapshot.val()) : [];
-        this.$store.dispatch("onceUsersAreLoaded", { users });
-      });
-    },
     setFirebaseAuthEvents() {
       firebaseAuthentication.onAuthStateChanged(user => {
         this.$store.dispatch("authorize", {
@@ -39,7 +32,13 @@ export default {
       });
     },
     setFirebaseDatabaseEvents() {
+      this.setUsersRefEvents();
       this.setMessagesRefEvents();
+    },
+    setUsersRefEvents() {
+      usersRef.on("child_added", snapshot => {
+        this.$store.dispatch("appendUser", { user: snapshot.val() });
+      });
     },
     setMessagesRefEvents() {
       messagesRef.on("child_added", snapshot => {
