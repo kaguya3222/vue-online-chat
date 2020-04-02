@@ -5,6 +5,7 @@ import router from "./router";
 import store from "./store";
 import VueBootstrap from "./plugins/vue-bootstrap";
 import vuelidate from "./plugins/vuelidate";
+import "native-toast/dist/native-toast.css";
 
 Vue.config.productionTip = false;
 
