@@ -41,9 +41,11 @@ import AppDate from "./AppDate";
 import MessageListItemFormEdit from "./PageChatMessageListItemFormEdit";
 import { messagesRef } from "../firebaseTools";
 import { mapGetters } from "vuex";
+import notifications from "../mixins/notifications";
 
 export default {
   components: { AppDate, MessageListItemFormEdit },
+  mixins: [notifications],
   props: {
     message: {
       required: true,
@@ -65,12 +67,19 @@ export default {
   methods: {
     deleteMessage(message) {
       messagesRef.child(message.id).remove();
+      this.showDeleteNotification();
     },
     beginEditingMessage() {
       this.isEditing = true;
     },
     stopEditingMessage() {
       this.isEditing = false;
+    },
+    showDeleteNotification() {
+      this.showNotification({
+        message: `You deleted a message`,
+        type: "warning"
+      });
     }
   }
 };
