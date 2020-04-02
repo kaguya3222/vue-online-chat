@@ -107,7 +107,7 @@ export default {
           required,
           email,
           isUnique(value) {
-            return !this.user({ email: value });
+            return !this.userByProperty({ property: { name: "email", value } });
           }
         }
       },
@@ -134,7 +134,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["authUser", "user"]),
+    ...mapGetters(["authUser", "userByProperty"]),
     isDisabled() {
       return this.$v.form.$invalid || this.isRegistering;
     }

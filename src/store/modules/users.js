@@ -4,8 +4,8 @@ export default {
     authUser: null
   },
   getters: {
-    user: state => ({ email }) =>
-      state.users ? state.users.find(user => user.email === email) : null,
+    userByProperty: state => ({ property }) =>
+      state.users.find(user => user[property.name] === property.value),
     authUser: state => state.authUser,
     nickname: state => (state.authUser ? state.authUser.displayName : null)
   },
