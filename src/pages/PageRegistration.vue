@@ -20,6 +20,10 @@
         <template v-else>Sign up</template>
       </b-button>
     </b-form>
+    <p class="mt-2">
+      Already have an account?
+      <router-link :to="{ name: 'SignIn' }">Sign in</router-link>
+    </p>
   </div>
 </template>
 

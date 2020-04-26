@@ -32,6 +32,10 @@
         <template v-else>Sign In</template>
       </b-button>
     </b-form>
+    <p class="mt-2">
+      Don't have an account?
+      <router-link :to="{ name: 'SignUp' }">Sign up</router-link>
+    </p>
     <span v-if="isAuthorizingFailed" class="text-danger mt-1"
       >Invalid email or password</span
     >
