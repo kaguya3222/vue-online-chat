@@ -10,20 +10,20 @@ export default {
     nickname: state => (state.authUser ? state.authUser.displayName : null)
   },
   mutations: {
-    setAuthUser(state, { user }) {
+    setAuthUser: (state, { user }) => {
       state.authUser = user;
     },
-    appendToUsers(state, { user }) {
+    appendToUsers: (state, { user }) => {
       state.users.push(user);
     }
   },
   actions: {
-    authorize(store, { user }) {
+    authorize: (store, { user }) => {
       store.commit("setAuthUser", {
         user
       });
     },
-    async updateUserProfile(store, { user }) {
+    updateUserProfile: async (store, { user }) => {
       await store.state.authUser
         .updateProfile({
           ...user
@@ -34,7 +34,7 @@ export default {
           });
         });
     },
-    appendUser(store, { user }) {
+    appendUser: (store, { user }) => {
       store.commit("appendToUsers", { user });
     }
   }
