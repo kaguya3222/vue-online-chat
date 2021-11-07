@@ -15,20 +15,20 @@
           >
         </b-nav-item-dropdown>
         <template v-else>
-          <b-button
+          <BaseButton
             squared
-            variant="dark"
-            text-variant="dark"
+            :variant="baseButtonVariants.dark"
             :to="{ name: 'SignIn' }"
-            >Sign in</b-button
+            >Sign in</BaseButton
           >
-          <b-button
+          <BaseButton
             class="ml-2"
             squared
-            variant="outline-light"
             :to="{ name: 'SignUp' }"
-            >Sign up</b-button
+            :variant="baseButtonVariants.outlineLight"
           >
+            Sign up
+          </BaseButton>
         </template>
       </b-navbar-nav>
     </b-collapse>
@@ -37,10 +37,16 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { firebaseAuthentication } from "../firebaseTools";
+import { firebaseAuthentication } from "@/firebaseTools";
+import BaseButton from "@/components/BaseButton/index";
+import { baseButtonVariants } from "@/components/BaseButton/constants";
 
 export default {
-  computed: { ...mapGetters(["nickname"]) },
+  components: { BaseButton },
+  computed: {
+    ...mapGetters(["nickname"]),
+    baseButtonVariants: () => baseButtonVariants
+  },
   methods: {
     signOut() {
       firebaseAuthentication.signOut();
@@ -48,5 +54,3 @@ export default {
   }
 };
 </script>
-
-<style scoped></style>

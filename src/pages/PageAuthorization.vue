@@ -22,15 +22,14 @@
           autocomplete="cc-password"
         ></b-form-input>
       </b-form-group>
-      <b-button
+      <BaseButton
         type="submit"
         class="align-self-center"
-        variant="primary"
         :disabled="isAuthorizing"
       >
         <b-spinner small v-if="isAuthorizing"></b-spinner>
         <template v-else>Sign In</template>
-      </b-button>
+      </BaseButton>
     </b-form>
     <p class="mt-2">
       Don't have an account?
@@ -43,12 +42,14 @@
 </template>
 
 <script>
-import { firebaseAuthentication } from "../firebaseTools";
+import { firebaseAuthentication } from "@/firebaseTools";
 import page from "../mixins/page";
 import { validationMixin } from "vuelidate";
 import { required } from "vuelidate/lib/validators";
+import BaseButton from "@/components/BaseButton/index";
 
 export default {
+  components: { BaseButton },
   mixins: [page, validationMixin],
   data() {
     return {

@@ -10,15 +10,14 @@
         :input-metadata="input.metadata"
         :validation="$v.form[input.metadata.validationName].value"
       />
-      <b-button
+      <BaseButton
         type="submit"
         class="align-self-center"
-        variant="primary"
         :disabled="isDisabled"
       >
         <b-spinner small v-if="isRegistering"></b-spinner>
         <template v-else>Sign up</template>
-      </b-button>
+      </BaseButton>
     </b-form>
     <p class="mt-2">
       Already have an account?
@@ -29,15 +28,17 @@
 
 <script>
 import PageRegistrationInput from "../components/PageRegistrationInput";
-import { firebaseAuthentication, usersRef } from "../firebaseTools";
+import { firebaseAuthentication, usersRef } from "@/firebaseTools";
 import { mapGetters } from "vuex";
 import { validationMixin } from "vuelidate";
 import { required, minLength, email, sameAs } from "vuelidate/lib/validators";
 import page from "../mixins/page";
+import BaseButton from "@/components/BaseButton/index";
 
 export default {
   components: {
-    PageRegistrationInput
+    PageRegistrationInput,
+    BaseButton
   },
   mixins: [page, validationMixin],
   data() {
